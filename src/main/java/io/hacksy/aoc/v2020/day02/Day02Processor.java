@@ -22,8 +22,11 @@ public class Day02Processor {
     int partTwo(List<String> input) {
         return input
                 .map(this::parsePasswordProfile)
-                .filter(pp -> (pp.lower() > 0 && pp.password().charAt(pp.lower() - 1) == pp.reqChar())
-                        ^ (pp.upper() <= pp.password().length() && pp.password().charAt(pp.upper() - 1) == pp.reqChar()))
+                .filter(pp -> {
+                    var firstChar = pp.password().charAt(pp.lower() - 1);
+                    var secondChar = pp.password().charAt(pp.upper() - 1);
+                    return firstChar == pp.reqChar() ^ secondChar == pp.reqChar();
+                })
                 .size();
     }
 
