@@ -28,10 +28,10 @@ public class Day05Processor {
     }
 
     private int processPassBin(String rawPass) {
-        var binString = rawPass.chars()
-                .mapToObj(i ->(char) i)
+        var binString = List.ofAll(rawPass.toCharArray())
                 .map(c -> onBits.contains(c) ? "1" : "0")
-                .collect(Collectors.joining(""));
+                .foldLeft(new StringBuilder(), StringBuilder::append)
+                .toString();
         return Integer.parseInt(binString, 2);
     }
 
