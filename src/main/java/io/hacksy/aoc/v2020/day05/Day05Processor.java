@@ -1,15 +1,13 @@
 package io.hacksy.aoc.v2020.day05;
 
-import io.vavr.collection.HashMap;
-import io.vavr.collection.List;
-import io.vavr.collection.Map;
+import io.vavr.collection.*;
 
 import java.util.stream.Collectors;
 
 import static io.vavr.API.*;
 
 public class Day05Processor {
-    private static final Map<Character, Character> convMap = HashMap.of('B', '1', 'R', '1');
+    private static final Set<Character> onBits = HashSet.of('B', 'R');
 
     String partOne(List<String> input) {
         return Integer.toString(input.map(this::processPassBin).max().get());
@@ -32,7 +30,7 @@ public class Day05Processor {
     private int processPassBin(String rawPass) {
         var binString = rawPass.chars()
                 .mapToObj(i ->(char) i)
-                .map(c -> convMap.getOrElse(c, '0').toString())
+                .map(c -> onBits.contains(c) ? "1" : "0")
                 .collect(Collectors.joining(""));
         return Integer.parseInt(binString, 2);
     }
