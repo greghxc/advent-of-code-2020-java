@@ -2,7 +2,7 @@ package io.hacksy.aoc.v2020.day04;
 
 import io.vavr.collection.*;
 
-import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 public class Day04Processor {
@@ -56,7 +56,7 @@ public class Day04Processor {
             var pid = fieldMap.get("pid").isDefined() &&
                     pidPattern.matcher(fieldMap.get("pid").get()).find();
 
-            Function<String, Boolean> hgtCheck = (str -> {
+            Predicate<String> hgtCheck = (str -> {
                var v = true;
                var m = hgtPattern.matcher(str);
                if (m.find()) {
@@ -75,7 +75,7 @@ public class Day04Processor {
             });
 
             var hgt = fieldMap.get("hgt").isDefined() &&
-                    hgtCheck.apply(fieldMap.get("hgt").get());
+                    hgtCheck.test(fieldMap.get("hgt").get());
 
             if (byr && iyr && eyr && hcl && ecl && pid && hgt) { valid++; }
 
