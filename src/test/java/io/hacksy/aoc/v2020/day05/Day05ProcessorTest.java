@@ -35,11 +35,4 @@ class Day05ProcessorTest {
         var input = List.of("BBFFBBFRLL");
         assertThat(p.partOne(input)).isEqualTo("820");
     }
-
-    @Test
-    void partTwo() {
-        var p = new Day05Processor();
-        var input = List.of("");
-        assertThat(p.partTwo(input)).isEqualTo("");
-    }
 }
