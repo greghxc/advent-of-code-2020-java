@@ -5,7 +5,7 @@ import io.vavr.collection.List;
 import java.util.regex.Pattern;
 
 public class Day02Processor {
-    static final Pattern PATTERN = Pattern.compile("");
+    static final Pattern PATTERN = Pattern.compile("([0-9]+)-([0-9]+) (.): (.+)");
 
     int partOne(List<String> input) {
         return input
