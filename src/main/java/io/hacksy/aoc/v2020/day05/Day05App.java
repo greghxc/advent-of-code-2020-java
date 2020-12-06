@@ -15,8 +15,8 @@ public class Day05App {
 
         var times = 1;
         PerfUtil.timeAndPrintRepeated(times, () ->
-                String.format("Day 04 - Part 1: %s", processor.partOne(strings)));
+                String.format("Day 05 - Part 1: %s", processor.partOne(strings)));
         PerfUtil.timeAndPrintRepeated(times, () ->
-                String.format("Day 04 - Part 2: %s", processor.partTwo(strings)));
+                String.format("Day 05 - Part 2: %s", processor.partTwo(strings)));
     }
 }
