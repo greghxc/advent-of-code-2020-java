@@ -1,19 +1,24 @@
 package io.hacksy.aoc.v2020.day06;
 
-import io.vavr.Tuple;
+import io.vavr.Value;
 import io.vavr.collection.CharSeq;
+import io.vavr.collection.Set;
+
+import java.util.function.BinaryOperator;
 
 public class Day06Processor {
     int partOne(String input) {
-        return CharSeq.of(input).split("\\n\\n")
-                .map(a -> CharSeq.of(a).filter(c -> c != '\n').toSet().size())
-                .sum().intValue();
+        return splitToSetAndReduce(input, Set::union);
     }
 
     int partTwo(String input) {
+        return splitToSetAndReduce(input, Set::intersect);
+    }
+
+    int splitToSetAndReduce(String input, BinaryOperator<Set<Character>> reduceFunc) {
         return CharSeq.of(input).split("\\n\\n")
-                .map(s -> CharSeq.of(s).groupBy(c -> c).toMap(t -> Tuple.of(t._1, t._2.size())))
-                .map(m -> m.values().filter(v -> v == m.getOrElse('\n', 0) + 1).size())
+                .map(group -> group.split("\\n").map(Value::toSet))
+                .map(groupSets -> groupSets.reduce(reduceFunc).size())
                 .sum().intValue();
     }
 }
