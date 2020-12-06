@@ -15,7 +15,7 @@ public class Day06Processor {
         return splitToSetAndReduce(input, Set::intersect);
     }
 
-    int splitToSetAndReduce(String input, BinaryOperator<Set<Character>> reduceFunc) {
+    private int splitToSetAndReduce(String input, BinaryOperator<Set<Character>> reduceFunc) {
         return CharSeq.of(input).split("\\n\\n")
                 .map(group -> group.split("\\n").map(Value::toSet))
                 .map(groupSets -> groupSets.reduce(reduceFunc).size())
