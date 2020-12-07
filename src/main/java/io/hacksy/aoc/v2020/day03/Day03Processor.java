@@ -18,12 +18,9 @@ public class Day03Processor {
     }
 
     int sub(List<String> input, int right, int down) {
-        var trees = 0;
-        for (int i = 0; i * down < input.size(); i++) {
-            if (input.get(i * down).charAt((i * right) % input.get(i * down).length())== '#') {
-                trees++;
-            }
-        }
-        return trees;
+        return List.range(0, input.size() / down)
+                .map(i -> input.get(i * down).charAt((i * right) % input.get(i * down).length()))
+                .filter(c -> c == '#')
+                .size();
     }
 }
