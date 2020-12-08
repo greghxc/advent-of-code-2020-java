@@ -13,10 +13,9 @@ public class Day08Processor {
 
     int partTwo(List<String> input) {
         var program = parseProgram(input);
-        return List.range(0, input.size())
-                .filter(i -> TRANSLATION_MAP.keySet().contains(program.get(i).command()))
-                .map(i -> Tuple.of(i, program.get(i)))
-                .map(t -> program.update(t._1, new instruction(TRANSLATION_MAP.get(t._2.command).get(), t._2.value)))
+        return program.zipWithIndex()
+                .filter(t -> TRANSLATION_MAP.keySet().contains(program.get(t._2).command()))
+                .map(t -> program.update(t._2, new instruction(TRANSLATION_MAP.get(t._1.command).get(), t._1.value)))
                 .append(program)
                 .toStream()
                 .map(p -> runProgram(0, 0, HashSet.empty(), p))
