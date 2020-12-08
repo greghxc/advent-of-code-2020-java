@@ -1,6 +1,5 @@
 package io.hacksy.aoc.v2020.day08;
 
-import io.vavr.Tuple;
 import io.vavr.collection.*;
 
 public class Day08Processor {
@@ -14,10 +13,9 @@ public class Day08Processor {
     int partTwo(List<String> input) {
         var program = parseProgram(input);
         return program.zipWithIndex()
+                .toStream()
                 .filter(t -> TRANSLATION_MAP.keySet().contains(program.get(t._2).command()))
                 .map(t -> program.update(t._2, new instruction(TRANSLATION_MAP.get(t._1.command).get(), t._1.value)))
-                .append(program)
-                .toStream()
                 .map(p -> runProgram(0, 0, HashSet.empty(), p))
                 .find(result -> !result.isLoop()).get().acc();
     }
