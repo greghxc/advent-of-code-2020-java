@@ -24,11 +24,12 @@ public class Day09Processor {
         return longs.zipWithIndex()
                 .toStream()
                 .subSequence(prefixLength)
-                .find(t -> !longs.subSequence(t._2() - prefixLength, t._2())
-                        .crossProduct().map(prod -> prod._1() + prod._2())
-                        .toSet().contains(t._1())
-                )
-                .get()._1();
+                .find(t -> !longs
+                        .subSequence(t._2() - prefixLength, t._2())
+                        .crossProduct()
+                        .map(prod -> prod._1() + prod._2())
+                        .contains(t._1())
+                ).get()._1();
     }
 
     private Window findWindow(Window w, List<Long> input, long target) {
