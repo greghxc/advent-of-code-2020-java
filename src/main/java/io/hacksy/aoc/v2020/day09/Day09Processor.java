@@ -15,7 +15,7 @@ public class Day09Processor {
 
     long partTwo(List<String> input) {
         var longs = input.map(Long::parseLong);
-        var window = findWindow(new Window(0, 0, longs.get(0)), longs, getInvalidNumber(longs));
+        var window = findWindow(longs, getInvalidNumber(longs));
         var seq = longs.subSequence(window.left(), window.right() + 1);
         return seq.min().get() + seq.max().get();
     }
@@ -32,7 +32,8 @@ public class Day09Processor {
                 ).get()._1();
     }
 
-    private Window findWindow(Window w, List<Long> input, long target) {
+    private Window findWindow(List<Long> input, long target) {
+        var w = new Window(0, 0, input.get(0));
         while (w.sum() != target) {
             w = w.sum() > target
                     ? new Window(w.left() + 1, w.right(), w.sum() - input.get(w.left()))
