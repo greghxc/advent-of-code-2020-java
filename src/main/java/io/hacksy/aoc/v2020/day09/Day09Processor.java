@@ -15,27 +15,9 @@ public class Day09Processor {
 
     long partTwo(List<String> input) {
         var longs = input.map(Long::parseLong);
-        var window = findWindow(longs, getInvalidNumber(longs));
+        var window = findWindow(new Window(0, 0, longs.get(0)), longs, getInvalidNumber(longs));
         var seq = longs.subSequence(window.left(), window.right() + 1);
         return seq.min().get() + seq.max().get();
-    }
-
-    Window findWindow(List<Long> input, long target) {
-        var window = new Window(0, 0, input.get(0));
-        while (window.sum != target) {
-            window = new Window(
-                    window.sum() > target
-                            ? window.left() + 1
-                            : window.left(),
-                    window.sum() > target
-                            ? window.right()
-                            : window.right() + 1,
-                    window.sum() > target
-                            ? window.sum() - input.get(window.left())
-                            : window.sum() + input.get(window.right() + 1)
-            );
-        }
-        return window;
     }
 
     private long getInvalidNumber(List<Long> longs) {
@@ -47,6 +29,15 @@ public class Day09Processor {
                         .toSet().contains(t._1())
                 )
                 .get()._1();
+    }
+
+    private Window findWindow(Window w, List<Long> input, long target) {
+        while (w.sum() != target) {
+            w = w.sum() > target
+                    ? new Window(w.left() + 1, w.right(), w.sum() - input.get(w.left()))
+                    : new Window(w.left(), w.right() + 1, w.sum() + input.get(w.right() + 1));
+        }
+        return w;
     }
 
     record Window(int left, int right, long sum) {}
