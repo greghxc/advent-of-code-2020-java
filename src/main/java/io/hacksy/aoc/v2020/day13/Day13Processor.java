@@ -15,12 +15,9 @@ public class Day13Processor {
 
     long recursive(long position, int schedIndex, List<Tuple2<Long, Integer>> schedules) {
         if (schedIndex >= schedules.size()) { return position; }
-        return recursive(
-                position + schedules.subSequence(0,schedIndex).map(Tuple2::_1).product().longValue(),
-                (position + schedules.get(schedIndex)._2()) % schedules.get(schedIndex)._1() == 0
-                        ? schedIndex + 1
-                        :schedIndex,
-                schedules
-        );
+        var nextPosition = position + schedules.subSequence(0,schedIndex).map(Tuple2::_1).product().longValue();
+        var mod = (nextPosition + schedules.get(schedIndex)._2()) % schedules.get(schedIndex)._1();
+        var nextSchedIndex = mod == 0 ? schedIndex + 1 : schedIndex;
+        return recursive(nextPosition, nextSchedIndex, schedules);
     }
 }
